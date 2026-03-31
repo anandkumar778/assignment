@@ -13,7 +13,7 @@ exports.createComment = async (req, res) => {
 
     const comment = await Comment.create({
       text,
-      user: new mongoose.Types.ObjectId(_id), // dummy user
+      // user: new mongoose.Types.ObjectId("64abc123456789012345678"), // dummy user
       post: new mongoose.Types.ObjectId(postId),
     });
 
@@ -45,7 +45,7 @@ exports.getCommentsByPost = async (req, res) => {
     
       .skip((page - 1) * limit)
       .limit(limit)
-      .populate("post", "_id");    
+      .populate("user", "name postId").populate("post", "title content");    
 
     const total = await Comment.countDocuments({ post: postId });
 
